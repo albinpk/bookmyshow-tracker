@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../models/models.dart';
+import '../repository/movies_repository.dart';
 
 /// A form to add new movie to tracking list.
 class AddTrackerForm extends StatefulWidget {
@@ -27,25 +29,36 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            // Form title
             Text(
               'Add a movie to track',
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 20),
+
+            // Title form field
             TextFormField(
               decoration: const InputDecoration(
                 label: Text('Title'),
                 border: OutlineInputBorder(),
               ),
-              validator: (value) {
-                if (value?.trim().isEmpty ?? true) {
+              autofocus: true,
+              textInputAction: TextInputAction.next,
+              validator: (title) {
+                if (title?.trim().isEmpty ?? true) {
                   return 'Please enter a title!';
+                }
+                title = title!.trim();
+                if (context.read<MoviesRepository>().contains(title: title)) {
+                  return 'Title already exist!';
                 }
                 return null;
               },
-              onSaved: (value) => _title = value!.trim(),
+              onSaved: (title) => _title = title!.trim(),
             ),
             const SizedBox(height: 20),
+
+            // Url form field
             TextFormField(
               decoration: const InputDecoration(
                 label: Text('BookMyShow url'),
@@ -54,17 +67,21 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
                 helperMaxLines: 5,
                 border: OutlineInputBorder(),
               ),
-              validator: (value) {
-                if (value?.trim().isEmpty ?? true) {
+              onFieldSubmitted: (_) => _onSave(),
+              validator: (url) {
+                if (url?.trim().isEmpty ?? true) {
                   return 'Please enter the movie Url!';
                 }
-                value = value!.trim();
-                if (!RegExp(bookmyshowUrlRegexp).hasMatch(value)) {
+                url = url!.trim();
+                if (!RegExp(bookmyshowUrlRegexp).hasMatch(url)) {
                   return 'Please enter a valid Url!';
+                }
+                if (context.read<MoviesRepository>().contains(url: url)) {
+                  return 'Url already exist!';
                 }
                 return null;
               },
-              onSaved: (value) => _url = value!.trim(),
+              onSaved: (url) => _url = url!.trim(),
             ),
             const SizedBox(height: 20),
             Row(
@@ -90,8 +107,10 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      final movie = Movie(title: _title, url: _url);
-      print(movie);
+      context
+          .read<MoviesRepository>()
+          .addMovie(Movie(title: _title, url: _url));
+      Navigator.pop(context);
     }
   }
 }
