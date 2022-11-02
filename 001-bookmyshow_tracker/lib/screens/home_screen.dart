@@ -32,9 +32,10 @@ class HomeScreen extends StatelessWidget {
           if (snapshot.hasData) {
             if (!snapshot.data!) return const Center(child: Text('Some error'));
 
-            final List<Movie> movies = (_localStorage.getItem('movies') as List)
-                .map((e) => Movie.fromMap(e))
-                .toList();
+            final List<Movie> movies =
+                (_localStorage.getItem('movies') as List? ?? [])
+                    .map((e) => Movie.fromMap(e))
+                    .toList();
 
             if (movies.isEmpty) {
               return const Center(child: Text('Track a movie'));
