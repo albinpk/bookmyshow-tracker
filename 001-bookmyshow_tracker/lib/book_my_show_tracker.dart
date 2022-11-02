@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'screens/screens.dart';
+
 class BookMyShowTracker extends StatelessWidget {
   const BookMyShowTracker({super.key});
 
@@ -8,11 +10,7 @@ class BookMyShowTracker extends StatelessWidget {
     return MaterialApp(
       title: 'Bookmyshow Tracker',
       darkTheme: ThemeData.dark(),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Home'),
-        ),
-      ),
+      home: const HomeScreen(),
     );
   }
 }
