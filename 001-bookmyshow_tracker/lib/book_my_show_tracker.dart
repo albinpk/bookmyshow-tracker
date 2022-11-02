@@ -21,7 +21,7 @@ class BookMyShowTracker extends StatelessWidget {
       child: MaterialApp(
         title: 'Bookmyshow Tracker',
         darkTheme: ThemeData.dark(),
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
