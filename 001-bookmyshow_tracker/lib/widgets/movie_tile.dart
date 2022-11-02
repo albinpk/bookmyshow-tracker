@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/models.dart';
+import '../repository/movies_repository.dart';
 
 class MovieTile extends StatelessWidget {
   const MovieTile({
@@ -39,6 +41,13 @@ class MovieTile extends StatelessWidget {
       children: [
         Row(
           children: [
+            IconButton(
+              onPressed: () {
+                context.read<MoviesRepository>().deleteMovie(movie);
+              },
+              tooltip: 'Delete',
+              icon: const Icon(Icons.delete, color: Colors.redAccent),
+            ),
             IconButton(
               onPressed: () {},
               tooltip: movie.url,
