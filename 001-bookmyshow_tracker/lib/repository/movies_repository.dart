@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -27,16 +29,27 @@ class MoviesRepository extends ChangeNotifier {
     if (_movies.isNotEmpty) notifyListeners();
   }
 
+  /// Save current movies list to localStorage.
+  Future<void> _setMovies() async {
+    try {
+      await _localStorage.setItem(_storageKey, _movies);
+    } catch (e) {
+      log('Error saving localStorage', error: e);
+    }
+  }
+
   /// Add given `movie` to movies list.
   void addMovie(Movie movie) {
     _movies = [movie, ..._movies];
     notifyListeners();
+    _setMovies();
   }
 
   /// Delete given `movie` from movies list.
   void deleteMovie(Movie movie) {
     _movies.remove(movie);
     notifyListeners();
+    _setMovies();
   }
 
   /// Return `true` if the [title] or [url] is already
