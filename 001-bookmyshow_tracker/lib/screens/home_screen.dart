@@ -16,7 +16,10 @@ class HomeScreen extends StatelessWidget {
           ? const Center(child: Text('Track a movie'))
           : ListView.builder(
               itemCount: movies.length,
-              itemBuilder: (context, i) => MovieTile(movie: movies[i]),
+              itemBuilder: (context, i) => MovieTile(
+                key: Key(movies[i].id),
+                movie: movies[i],
+              ),
             ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _onFabTap(context),
