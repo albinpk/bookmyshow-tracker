@@ -10,6 +10,9 @@ class Movie extends Equatable {
     this.trackingEnabled = true,
   });
 
+  /// Id of the movie. Same as [url].
+  String get id => url;
+
   /// The movie title.
   final String title;
 
@@ -23,7 +26,7 @@ class Movie extends Equatable {
   final bool trackingEnabled;
 
   @override
-  List<Object> get props => [title, url];
+  List<Object> get props => [title, url, isBookingAvailable, trackingEnabled];
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
