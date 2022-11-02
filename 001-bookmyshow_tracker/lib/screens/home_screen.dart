@@ -17,11 +17,11 @@ class HomeScreen extends StatelessWidget {
             subtitle: const Text('Last checked at 10:30 AM'),
             trailing: ClipOval(
               child: ColoredBox(
-                color: index.isOdd ? Colors.green : Colors.redAccent,
+                color: index.isOdd ? Colors.green : Colors.grey,
                 child: Padding(
                   padding: const EdgeInsets.all(5),
                   child: Icon(
-                    index.isOdd ? Icons.done : Icons.close,
+                    index.isOdd ? Icons.done : Icons.access_time,
                     color: Colors.white,
                   ),
                 ),
