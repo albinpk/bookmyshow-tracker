@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 
+import '../models/models.dart';
+
 class MovieTile extends StatelessWidget {
   const MovieTile({
     super.key,
-    required this.index,
+    required this.movie,
   });
 
-  final int index;
+  final Movie movie;
 
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text('Movie title'),
+      title: Text(movie.title),
       subtitle: const Text('Last checked at 10:30 AM'),
       trailing: ClipOval(
         child: ColoredBox(
-          color: index.isOdd ? Colors.green : Colors.grey,
+          color: movie.isBookingAvailable
+              ? Colors.green
+              : movie.trackingEnabled
+                  ? Colors.orange
+                  : Colors.grey,
           child: Padding(
             padding: const EdgeInsets.all(5),
             child: Icon(
-              index.isOdd ? Icons.done : Icons.access_time,
+              movie.isBookingAvailable
+                  ? Icons.done
+                  : movie.trackingEnabled
+                      ? Icons.access_time
+                      : Icons.not_interested,
               color: Colors.white,
             ),
           ),
@@ -31,12 +41,15 @@ class MovieTile extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {},
-              tooltip: 'https://movie/link',
+              tooltip: movie.url,
               icon: const Icon(Icons.open_in_new),
             ),
             const Spacer(),
             const Text('Tracking'),
-            Switch(value: true, onChanged: (v) {}),
+            Switch(
+              value: movie.trackingEnabled,
+              onChanged: (v) {},
+            ),
           ],
         ),
       ],

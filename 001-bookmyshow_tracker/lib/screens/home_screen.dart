@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
+import '../models/models.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final _localStorage = LocalStorage('bookmyshow-tracking.json');
+  final _localStorage = LocalStorage(
+    'bookmyshow-tracking.json',
+    null,
+    {
+      'movies': [
+        const Movie(
+          title: 'Black panther',
+          url: 'black/panther/url/',
+        ).toMap(),
+      ],
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +32,17 @@ class HomeScreen extends StatelessWidget {
           if (snapshot.hasData) {
             if (!snapshot.data!) return const Center(child: Text('Some error'));
 
+            final List<Movie> movies = (_localStorage.getItem('movies') as List)
+                .map((e) => Movie.fromMap(e))
+                .toList();
+
+            if (movies.isEmpty) {
+              return const Center(child: Text('Track a movie'));
+            }
+
             return ListView.builder(
-              itemCount: 5,
-              itemBuilder: (context, index) => MovieTile(index: index),
+              itemCount: movies.length,
+              itemBuilder: (context, i) => MovieTile(movie: movies[i]),
             );
           }
 
