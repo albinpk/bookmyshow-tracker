@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
+import '../constants.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 
@@ -8,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final _localStorage = LocalStorage(
-    'bookmyshow-tracking.json',
+    localStorageFileName,
     null,
     {
       'movies': [
