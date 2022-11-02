@@ -6,6 +6,8 @@ class Movie extends Equatable {
   const Movie({
     required this.title,
     required this.url,
+    this.isBookingAvailable = false,
+    this.trackingEnabled = true,
   });
 
   /// The movie title.
@@ -14,6 +16,12 @@ class Movie extends Equatable {
   /// The movie Url on bookmyshow.com.
   final String url;
 
+  /// Whether ticket booking is available for this movie or not.
+  final bool isBookingAvailable;
+
+  /// Whether tracking is enabled or not.
+  final bool trackingEnabled;
+
   @override
   List<Object> get props => [title, url];
 
@@ -21,6 +29,8 @@ class Movie extends Equatable {
     return <String, dynamic>{
       'title': title,
       'url': url,
+      'isBookingAvailable': isBookingAvailable,
+      'trackingEnabled': trackingEnabled,
     };
   }
 
@@ -28,12 +38,13 @@ class Movie extends Equatable {
     return Movie(
       title: map['title'] as String,
       url: map['url'] as String,
+      isBookingAvailable: map['isBookingAvailable'] as bool,
+      trackingEnabled: map['trackingEnabled'] as bool,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Movie.fromJson(String source) {
-    return Movie.fromMap(json.decode(source) as Map<String, dynamic>);
-  }
+  factory Movie.fromJson(String source) =>
+      Movie.fromMap(json.decode(source) as Map<String, dynamic>);
 }
