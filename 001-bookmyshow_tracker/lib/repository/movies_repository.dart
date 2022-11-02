@@ -16,10 +16,14 @@ class MoviesRepository extends ChangeNotifier {
   List<Movie> get movies => _movies;
   List<Movie> _movies = [];
 
+  static const _storageKey = 'movies';
+
   /// Get movies from local storage.
   Future<void> _getMovies() async {
     await _localStorage.ready;
-    _movies = _localStorage.getItem('movies') as List<Movie>? ?? [];
+    _movies = (_localStorage.getItem(_storageKey) as List? ?? [])
+        .map((e) => Movie.fromJson(e))
+        .toList();
     if (_movies.isNotEmpty) notifyListeners();
   }
 
