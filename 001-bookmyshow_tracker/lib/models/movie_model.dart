@@ -50,4 +50,18 @@ class Movie extends Equatable {
 
   factory Movie.fromJson(String source) =>
       Movie.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  Movie copyWith({
+    String? title,
+    String? url,
+    bool? isBookingAvailable,
+    bool? trackingEnabled,
+  }) {
+    return Movie(
+      title: title ?? this.title,
+      url: url ?? this.url,
+      isBookingAvailable: isBookingAvailable ?? this.isBookingAvailable,
+      trackingEnabled: trackingEnabled ?? this.trackingEnabled,
+    );
+  }
 }
