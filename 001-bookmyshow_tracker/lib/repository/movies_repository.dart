@@ -1,19 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../background_task.dart';
 import '../models/models.dart';
 
 class MoviesRepository extends ChangeNotifier {
-  MoviesRepository(this._localStorage) {
-    // Get movies from local storage
+  MoviesRepository(this._pref) {
+    // Get movies from storage
     _getMovies();
   }
 
-  /// LocalStorage instance.
-  final LocalStorage _localStorage;
+  /// SharedPreferences instance.
+  final SharedPreferences _pref;
 
   /// List of [Movie]s.
   List<Movie> get movies => _movies;
@@ -23,19 +23,20 @@ class MoviesRepository extends ChangeNotifier {
 
   /// Get movies from local storage.
   Future<void> _getMovies() async {
-    await _localStorage.ready;
-    _movies = (_localStorage.getItem(_storageKey) as List? ?? [])
-        .map((e) => Movie.fromJson(e))
-        .toList();
-    if (_movies.isNotEmpty) notifyListeners();
+    final rowMovies = _pref.getStringList(_storageKey) ?? [];
+    _movies = rowMovies.map((e) => Movie.fromJson(e)).toList();
+    notifyListeners();
   }
 
   /// Save current movies list to localStorage.
   Future<void> _setMovies() async {
     try {
-      await _localStorage.setItem(_storageKey, _movies);
+      await _pref.setStringList(
+        _storageKey,
+        _movies.map((e) => e.toJson()).toList(),
+      );
     } catch (e) {
-      log('Error saving localStorage', error: e);
+      log('Error saving to SharedPreferences', error: e);
     }
 
     if (_movies.where((m) => m.trackingEnabled).isEmpty) {

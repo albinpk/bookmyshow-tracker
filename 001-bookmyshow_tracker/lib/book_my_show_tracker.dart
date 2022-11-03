@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'repository/movies_repository.dart';
 import 'screens/screens.dart';
@@ -8,15 +8,15 @@ import 'screens/screens.dart';
 class BookMyShowTracker extends StatelessWidget {
   const BookMyShowTracker({
     super.key,
-    required this.localStorage,
+    required this.sharedPreferences,
   });
 
-  final LocalStorage localStorage;
+  final SharedPreferences sharedPreferences;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MoviesRepository>(
-      create: (context) => MoviesRepository(localStorage),
+      create: (context) => MoviesRepository(sharedPreferences),
       lazy: false,
       child: MaterialApp(
         title: 'Bookmyshow Tracker',

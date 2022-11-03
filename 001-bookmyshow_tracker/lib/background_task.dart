@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:localstorage/localstorage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'constants.dart';
@@ -50,11 +50,10 @@ void callbackDispatcher() {
     log('Executing task: $taskName');
 
     try {
-      final storage = LocalStorage(localStorageFileName);
-      await storage.ready;
+      final pref = await SharedPreferences.getInstance();
 
       // Get movies from localstorage
-      final List<Movie> movies = (storage.getItem('movies') as List? ?? [])
+      final List<Movie> movies = (pref.getStringList('movies') ?? [])
           .map((e) => Movie.fromJson(e))
           .where((m) => m.trackingEnabled)
           .toList();
@@ -77,9 +76,10 @@ void callbackDispatcher() {
             trackingEnabled: false,
           );
         }
-        await storage.setItem('movies', movies);
-
-        storage.dispose();
+        await pref.setStringList(
+          'movies',
+          movies.map((e) => e.toJson()).toList(),
+        );
       }
     } catch (e) {
       log('Background execution error', error: e);
