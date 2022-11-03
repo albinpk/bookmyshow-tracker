@@ -30,12 +30,24 @@ class _ToggleSwitchState extends State<_ToggleSwitch> {
   bool _isOn = false;
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (context
+        .read<MoviesRepository>()
+        .movies
+        .where((m) => m.trackingEnabled)
+        .isEmpty) {
+      setState(() => _isOn = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final haveMoviesToTrack = context.select((MoviesRepository repo) {
       return repo.movies.where((m) => m.trackingEnabled).isNotEmpty;
     });
     return Switch(
-      value: _isOn,
+      value: haveMoviesToTrack ? _isOn : false,
       onChanged: haveMoviesToTrack ? (v) => _onSwitch(v, context) : null,
       inactiveThumbColor: Colors.grey,
     );
