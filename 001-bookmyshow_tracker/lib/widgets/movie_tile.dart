@@ -60,11 +60,15 @@ class MovieTile extends StatelessWidget {
               icon: const Icon(Icons.open_in_new),
             ),
             const Spacer(),
-            const Text('Tracking'),
-            Switch(
-              value: movie.trackingEnabled,
-              onChanged: (v) {},
-            ),
+            if (!movie.isBookingAvailable) ...[
+              const Text('Tracking'),
+              Switch(
+                value: movie.trackingEnabled,
+                onChanged: (_) {
+                  context.read<MoviesRepository>().toggleTracking(movie);
+                },
+              ),
+            ]
           ],
         ),
       ],
