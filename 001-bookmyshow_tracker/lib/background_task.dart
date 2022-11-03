@@ -8,24 +8,44 @@ import 'package:workmanager/workmanager.dart';
 import 'constants.dart';
 import 'models/models.dart';
 
-/// Initializing workmanager.
-void workmanagerInit() {
-  Workmanager().initialize(
-    _callbackDispatcher,
-    isInDebugMode: kDebugMode,
-  );
+/// A class that contains all static method
+/// to handle workmanager background task.
+class BackgroundTask {
+  /// Initializing workmanager.
+  static Future<void> init() {
+    return Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: kDebugMode,
+    );
+  }
 
-  Workmanager().registerPeriodicTask(
-    backgroundTaskUniqName,
-    'background-fetch',
-    constraints: Constraints(
-      networkType: NetworkType.connected,
-    ),
-  );
+  /// Whether the background task started or not.
+  static bool _isBackgroundTaskStarted = false;
+
+  /// Register periodic task.
+  static Future<void> startBackgroundTask() async {
+    if (_isBackgroundTaskStarted) return;
+    await Workmanager().registerPeriodicTask(
+      backgroundTaskUniqName,
+      'background-fetch',
+      constraints: Constraints(
+        networkType: NetworkType.connected,
+      ),
+    );
+    _isBackgroundTaskStarted = true;
+  }
+
+  /// Cancel the background task.
+  static Future<void> stopBackgroundTask() async {
+    if (!_isBackgroundTaskStarted) return;
+    await Workmanager().cancelByUniqueName(backgroundTaskUniqName);
+    _isBackgroundTaskStarted = false;
+  }
 }
 
 /// The callback function for workmanager.
-void _callbackDispatcher() {
+@pragma('vm:entry-point')
+void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
     log('Executing task: $taskName');
 
@@ -43,7 +63,7 @@ void _callbackDispatcher() {
       // Check booking available
       final List<int> availableMoviesIndex = [];
       for (int i = 0; i < movies.length; i++) {
-        final available = await _checkBookingAvailable(movies[i]);
+        final available = await checkBookingAvailable(movies[i]);
         if (available) availableMoviesIndex.add(i);
         movies[i] = movies[i].copyWith(lastChecked: DateTime.now());
       }
@@ -70,7 +90,7 @@ void _callbackDispatcher() {
 }
 
 /// Check whether ticket booking available for the given `movie`.
-Future<bool> _checkBookingAvailable(Movie movie) async {
+Future<bool> checkBookingAvailable(Movie movie) async {
   try {
     final res = await http.get(Uri.parse(movie.url));
     if (res.body.contains('Book tickets')) return true;

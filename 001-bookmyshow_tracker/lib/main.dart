@@ -7,7 +7,7 @@ import 'constants.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  workmanagerInit();
+  BackgroundTask.init();
 
   final localStorage = LocalStorage(localStorageFileName);
   runApp(BookMyShowTracker(localStorage: localStorage));
