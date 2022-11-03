@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../repository/movies_repository.dart';
+import '../views/views.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -9,18 +10,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movies = context.watch<MoviesRepository>().movies;
     return Scaffold(
       appBar: const HomeAppBar(),
-      body: movies.isEmpty
+      body: context.select((MoviesRepository repo) => repo.movies.isEmpty)
           ? const Center(child: Text('Track a movie'))
-          : ListView.builder(
-              itemCount: movies.length,
-              itemBuilder: (context, i) => MovieTile(
-                key: Key(movies[i].id),
-                movie: movies[i],
-              ),
-            ),
+          : const MoviesListView(),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _onFabTap(context),
         child: const Icon(Icons.add),
