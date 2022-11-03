@@ -45,6 +45,7 @@ void _callbackDispatcher() {
       for (int i = 0; i < movies.length; i++) {
         final available = await _checkBookingAvailable(movies[i]);
         if (available) availableMoviesIndex.add(i);
+        movies[i] = movies[i].copyWith(lastChecked: DateTime.now());
       }
       log('Available movies length: ${availableMoviesIndex.length}');
 
