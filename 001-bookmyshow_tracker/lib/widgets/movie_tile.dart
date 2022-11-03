@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
@@ -16,7 +17,12 @@ class MovieTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(movie.title),
-      subtitle: const Text('Last checked at 10:30 AM'),
+      subtitle: Text(
+        _formatDate(movie.lastChecked),
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              color: Colors.grey,
+            ),
+      ),
       trailing: ClipOval(
         child: ColoredBox(
           color: movie.isBookingAvailable
@@ -63,5 +69,10 @@ class MovieTile extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _formatDate(DateTime? date) {
+    if (date == null) return 'Not checked yet.';
+    return 'Last check: ${DateFormat().add_jm().addPattern('-').add_MMMd().format(date)}';
   }
 }
