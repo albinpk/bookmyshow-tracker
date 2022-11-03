@@ -8,6 +8,7 @@ class Movie extends Equatable {
     required this.url,
     this.isBookingAvailable = false,
     this.trackingEnabled = true,
+    this.lastChecked,
   });
 
   /// Id of the movie. Same as [url].
@@ -25,8 +26,19 @@ class Movie extends Equatable {
   /// Whether tracking is enabled or not.
   final bool trackingEnabled;
 
+  /// Last checked time.
+  final DateTime? lastChecked;
+
   @override
-  List<Object> get props => [title, url, isBookingAvailable, trackingEnabled];
+  List<Object?> get props {
+    return [
+      title,
+      url,
+      isBookingAvailable,
+      trackingEnabled,
+      lastChecked,
+    ];
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -34,6 +46,7 @@ class Movie extends Equatable {
       'url': url,
       'isBookingAvailable': isBookingAvailable,
       'trackingEnabled': trackingEnabled,
+      'lastChecked': lastChecked?.millisecondsSinceEpoch,
     };
   }
 
@@ -43,6 +56,9 @@ class Movie extends Equatable {
       url: map['url'] as String,
       isBookingAvailable: map['isBookingAvailable'] as bool,
       trackingEnabled: map['trackingEnabled'] as bool,
+      lastChecked: map['lastChecked'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['lastChecked'] as int)
+          : null,
     );
   }
 
@@ -56,12 +72,14 @@ class Movie extends Equatable {
     String? url,
     bool? isBookingAvailable,
     bool? trackingEnabled,
+    DateTime? lastChecked,
   }) {
     return Movie(
       title: title ?? this.title,
       url: url ?? this.url,
       isBookingAvailable: isBookingAvailable ?? this.isBookingAvailable,
       trackingEnabled: trackingEnabled ?? this.trackingEnabled,
+      lastChecked: lastChecked ?? this.lastChecked,
     );
   }
 }
