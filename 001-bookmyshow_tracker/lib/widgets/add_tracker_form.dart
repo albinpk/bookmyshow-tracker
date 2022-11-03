@@ -20,6 +20,14 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
   late String _title;
   late String _url;
 
+  final _titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -38,11 +46,11 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
 
             // Title form field
             TextFormField(
+              controller: _titleController,
               decoration: const InputDecoration(
                 label: Text('Title'),
                 border: OutlineInputBorder(),
               ),
-              autofocus: true,
               textInputAction: TextInputAction.next,
               validator: (title) {
                 if (title?.trim().isEmpty ?? true) {
@@ -60,6 +68,7 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
 
             // Url form field
             TextFormField(
+              autofocus: true,
               decoration: const InputDecoration(
                 label: Text('BookMyShow url'),
                 helperText: 'Url starts with:\n'
@@ -67,6 +76,22 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
                 helperMaxLines: 5,
                 border: OutlineInputBorder(),
               ),
+              onChanged: (url) {
+                if (_titleController.text.trim().isNotEmpty) return;
+                url = url.trim();
+                if (RegExp(bookmyshowUrlRegexp).hasMatch(url)) {
+                  final start = url.indexOf('/movies/', 26) + 8;
+                  final end = url.indexOf('/ET', start);
+                  final name = url.substring(start, end);
+                  _titleController.text = name
+                      .split('-')
+                      .where((e) => e.isNotEmpty)
+                      .map((e) =>
+                          e[0].toUpperCase() +
+                          (e.length > 1 ? e.substring(1) : ''))
+                      .join(' ');
+                }
+              },
               onFieldSubmitted: (_) => _onSave(),
               validator: (url) {
                 if (url?.trim().isEmpty ?? true) {
