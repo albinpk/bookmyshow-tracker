@@ -44,6 +44,11 @@ class MoviesRepository extends ChangeNotifier {
     }
   }
 
+  Future<void> refresh() async {
+    await _pref.reload();
+    return _getMovies();
+  }
+
   /// Add given `movie` to movies list.
   void addMovie(Movie movie) {
     _movies = [movie, ..._movies];
