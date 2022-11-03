@@ -69,6 +69,7 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
             // Url form field
             TextFormField(
               autofocus: true,
+              keyboardType: TextInputType.url,
               decoration: const InputDecoration(
                 label: Text('BookMyShow url'),
                 helperText: 'Url starts with:\n'

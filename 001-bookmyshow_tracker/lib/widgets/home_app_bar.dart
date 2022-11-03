@@ -36,9 +36,7 @@ class _ToggleSwitchState extends State<_ToggleSwitch> {
         .read<MoviesRepository>()
         .movies
         .where((m) => m.trackingEnabled)
-        .isEmpty) {
-      setState(() => _isOn = false);
-    }
+        .isEmpty) setState(() => _isOn = false);
   }
 
   @override
