@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final movies = context.watch<MoviesRepository>().movies;
     return Scaffold(
-      appBar: AppBar(title: const Text('BookMyShow Tracker')),
+      appBar: const HomeAppBar(),
       body: movies.isEmpty
           ? const Center(child: Text('Track a movie'))
           : ListView.builder(
