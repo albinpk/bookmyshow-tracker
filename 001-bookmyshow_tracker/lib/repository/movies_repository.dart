@@ -52,6 +52,14 @@ class MoviesRepository extends ChangeNotifier {
     _setMovies();
   }
 
+  /// Toggle `trackingEnabled` of given `movie`.
+  void toggleTracking(Movie movie) {
+    final index = movies.indexOf(movie);
+    movies[index] = movie.copyWith(trackingEnabled: !movie.trackingEnabled);
+    notifyListeners();
+    _setMovies();
+  }
+
   /// Return `true` if the [title] or [url] is already
   /// contains in movies list. Otherwise return `false`.
   bool contains({String? title, String? url}) {
