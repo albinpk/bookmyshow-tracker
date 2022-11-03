@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../models/models.dart';
 import '../repository/movies_repository.dart';
@@ -55,7 +56,7 @@ class MovieTile extends StatelessWidget {
               icon: const Icon(Icons.delete, color: Colors.redAccent),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () => _launchUrl(context),
               tooltip: movie.url,
               icon: const Icon(Icons.open_in_new),
             ),
@@ -73,6 +74,23 @@ class MovieTile extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Launch movie url on external (bookmyshow) application.
+  /// Show SnackBar if it fails.
+  Future<void> _launchUrl(BuildContext context) async {
+    try {
+      if (!await launchUrl(
+        Uri.parse(movie.url),
+        mode: LaunchMode.externalNonBrowserApplication,
+      )) throw 'error';
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Can't open this url"),
+        ),
+      );
+    }
   }
 
   String _formatDate(DateTime? date) {
