@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:localstorage/localstorage.dart';
 
+import '../background_task.dart';
 import '../models/models.dart';
 
 class MoviesRepository extends ChangeNotifier {
@@ -35,6 +36,10 @@ class MoviesRepository extends ChangeNotifier {
       await _localStorage.setItem(_storageKey, _movies);
     } catch (e) {
       log('Error saving localStorage', error: e);
+    }
+
+    if (_movies.where((m) => m.trackingEnabled).isEmpty) {
+      BackgroundTask.stopBackgroundTask();
     }
   }
 
