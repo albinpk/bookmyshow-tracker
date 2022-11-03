@@ -16,7 +16,7 @@ void workmanagerInit() {
   );
 
   Workmanager().registerPeriodicTask(
-    'bookmyshow-periodic-task',
+    backgroundTaskUniqName,
     'background-fetch',
     constraints: Constraints(
       networkType: NetworkType.connected,
