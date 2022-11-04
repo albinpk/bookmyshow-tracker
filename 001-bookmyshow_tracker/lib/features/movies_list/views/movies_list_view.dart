@@ -15,54 +15,37 @@ class _MoviesListViewState extends State<MoviesListView>
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addObserver(this);
-    // WidgetsBinding.instance.addPostFrameCallback(_startRefreshTimer);
-    // _timer = _getTimer;
+    WidgetsBinding.instance.addObserver(this);
   }
-
-  // Timer get _getTimer => Timer.periodic(
-  //       const Duration(seconds: 1),
-  //       (timer) {
-  //         log('Refresh ${_timer!.tick}');
-  //         context.read<MoviesRepository>().refresh();
-  //       },
-  //     );
 
   @override
   void dispose() {
-    // WidgetsBinding.instance.removeObserver(this);
-    // _timer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
-  // Timer? _timer;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        _refresh();
+        break;
+      case AppLifecycleState.inactive:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+        break;
+    }
+  }
 
-  // void _startRefreshTimer(_) {
-  //   final movies = context.read<MoviesRepository>().movies;
-  //   if (movies.where((m) => m.trackingEnabled).isEmpty) return;
-  // }
-
-  // @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   super.didChangeAppLifecycleState(state);
-  //   switch (state) {
-  //     case AppLifecycleState.paused:
-  //       _timer?.cancel();
-  //       break;
-  //     case AppLifecycleState.resumed:
-  //       _timer = _getTimer;
-  //       break;
-
-  //     default:
-  //   }
-  // }
+  Future<void> _refresh() => context.read<MoviesListCubit>().refresh();
 
   @override
   Widget build(BuildContext context) {
     final movies =
         context.select((MoviesListCubit cubit) => cubit.state.movies);
     return RefreshIndicator(
-      onRefresh: () => context.read<MoviesListCubit>().refresh(),
+      onRefresh: _refresh,
       child: ListView.builder(
         itemCount: movies.length,
         itemBuilder: (context, i) => MovieTile(
