@@ -48,48 +48,41 @@ class WorkmanagerController {
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
-    log('Executing task: $taskName');
-
     try {
       final pref = await SharedPreferences.getInstance();
 
-      // Get movies from localstorage
+      // Get movies from SharedPreferences
       final List<Movie> movies = (pref.getStringList('movies') ?? [])
           .map((e) => Movie.fromJson(e))
-          .where((m) => m.trackingEnabled)
           .toList();
-      log('Movies length: ${movies.length}');
-
-      // Stop the background task and exit if movies is empty
-      if (movies.isEmpty) {
-        await WorkmanagerController.stopBackgroundTask();
-        log('Background task stop and exit');
-        return true;
-      }
 
       // Check booking available
-      final List<int> availableMoviesIndex = [];
       for (int i = 0; i < movies.length; i++) {
+        if (!movies[i].trackingEnabled) continue; // skip disabled movies
         final available = await checkBookingAvailable(movies[i]);
-        if (available) availableMoviesIndex.add(i);
-        movies[i] = movies[i].copyWith(lastChecked: DateTime.now());
-      }
-      log('Available movies length: ${availableMoviesIndex.length}');
-
-      // Update localstorage if booking available
-      if (availableMoviesIndex.isNotEmpty) {
-        for (final i in availableMoviesIndex) {
-          movies[i] = movies[i].copyWith(
-            isBookingAvailable: true,
-            trackingEnabled: false,
-          );
+        movies[i] = movies[i].copyWith(
+          lastChecked: DateTime.now(),
+          isBookingAvailable: available,
+          trackingEnabled: !available,
+        );
+        if (available) {
           NotificationController.showBookingAvailableNotification(movies[i]);
         }
       }
+
+      // Update localstorage with updated list
       await pref.setStringList(
         'movies',
         movies.map((e) => e.toJson()).toList(),
       );
+
+      // Cancel the background task if there
+      // is no trackingEnabled movies in the list
+      if (movies.where((m) => m.trackingEnabled).isEmpty) {
+        await WorkmanagerController.stopBackgroundTask();
+        await pref.setBool('isBackgroundFetchActive', false);
+        return true;
+      }
     } catch (e) {
       log('Background execution error', error: e);
     }
