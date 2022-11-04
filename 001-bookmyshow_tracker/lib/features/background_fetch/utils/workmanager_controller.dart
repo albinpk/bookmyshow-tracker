@@ -83,8 +83,8 @@ void callbackDispatcher() {
             isBookingAvailable: true,
             trackingEnabled: false,
           );
+          NotificationController.showBookingAvailableNotification(movies[i]);
         }
-        NotificationController.showNotification();
       }
       await pref.setStringList(
         'movies',
