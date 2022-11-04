@@ -31,6 +31,7 @@ class WorkmanagerController {
     await Workmanager().registerPeriodicTask(
       backgroundTaskUniqName,
       'background-fetch',
+      frequency: const Duration(hours: 1),
       constraints: Constraints(
         networkType: NetworkType.connected,
       ),
