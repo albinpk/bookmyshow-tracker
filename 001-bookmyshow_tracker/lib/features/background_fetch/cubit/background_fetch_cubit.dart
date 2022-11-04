@@ -7,7 +7,9 @@ import '../utils/workmanager_controller.dart';
 part 'background_fetch_state.dart';
 
 class BackgroundFetchCubit extends Cubit<bool> {
-  BackgroundFetchCubit(this._pref) : super(_pref.getBool(_key) ?? false);
+  BackgroundFetchCubit(this._pref) : super(_pref.getBool(_key) ?? false) {
+    WorkmanagerController.isBackgroundTaskStarted = state;
+  }
 
   final SharedPreferences _pref;
 

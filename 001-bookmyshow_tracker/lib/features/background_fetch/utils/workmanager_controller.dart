@@ -21,11 +21,11 @@ class WorkmanagerController {
   }
 
   /// Whether the background task started or not.
-  static bool _isBackgroundTaskStarted = false;
+  static bool isBackgroundTaskStarted = false;
 
   /// Register periodic task.
   static Future<void> startBackgroundTask() async {
-    if (_isBackgroundTaskStarted) return;
+    if (isBackgroundTaskStarted) return;
     await Workmanager().registerPeriodicTask(
       backgroundTaskUniqName,
       'background-fetch',
@@ -33,14 +33,14 @@ class WorkmanagerController {
         networkType: NetworkType.connected,
       ),
     );
-    _isBackgroundTaskStarted = true;
+    isBackgroundTaskStarted = true;
   }
 
   /// Cancel the background task.
   static Future<void> stopBackgroundTask() async {
-    if (!_isBackgroundTaskStarted) return;
+    if (!isBackgroundTaskStarted) return;
     await Workmanager().cancelByUniqueName(backgroundTaskUniqName);
-    _isBackgroundTaskStarted = false;
+    isBackgroundTaskStarted = false;
   }
 }
 
