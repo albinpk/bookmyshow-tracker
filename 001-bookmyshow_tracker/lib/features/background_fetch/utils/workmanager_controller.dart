@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
-import '../../../core/constants.dart';
 import '../../../core/models/models.dart';
 import '../../notifications/notifications.dart';
 
@@ -22,6 +21,9 @@ class WorkmanagerController {
 
   /// Whether the background task started or not.
   static bool isBackgroundTaskStarted = false;
+
+  /// Uniq name for workmanager background task
+  static const backgroundTaskUniqName = 'bookmyshow-periodic-task';
 
   /// Register periodic task.
   static Future<void> startBackgroundTask() async {
