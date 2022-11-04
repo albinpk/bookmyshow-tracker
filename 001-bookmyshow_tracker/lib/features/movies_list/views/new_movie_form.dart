@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../constants.dart';
-import '../models/models.dart';
-import '../repository/movies_repository.dart';
+import '../../../core/constants.dart';
+import '../../../core/models/models.dart';
+import '../movies_list.dart';
 
 /// A form to add new movie to tracking list.
-class AddTrackerForm extends StatefulWidget {
-  const AddTrackerForm({super.key});
+class NewMovieForm extends StatefulWidget {
+  const NewMovieForm({super.key});
 
   @override
-  State<AddTrackerForm> createState() => _AddTrackerFormState();
+  State<NewMovieForm> createState() => _NewMovieFormState();
 }
 
-class _AddTrackerFormState extends State<AddTrackerForm> {
+class _NewMovieFormState extends State<NewMovieForm> {
   final _formKey = GlobalKey<FormState>();
 
   // To store Form value
   late String _title;
   late String _url;
+
+  bool _isLoading = false;
 
   final _titleController = TextEditingController();
 
@@ -57,7 +59,7 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
                   return 'Please enter a title!';
                 }
                 title = title!.trim();
-                if (context.read<MoviesRepository>().contains(title: title)) {
+                if (context.read<MoviesListCubit>().contains(title: title)) {
                   return 'Title already exist!';
                 }
                 return null;
@@ -102,7 +104,7 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
                 if (!RegExp(bookmyshowUrlRegexp).hasMatch(url)) {
                   return 'Please enter a valid Url!';
                 }
-                if (context.read<MoviesRepository>().contains(url: url)) {
+                if (context.read<MoviesListCubit>().contains(url: url)) {
                   return 'Url already exist!';
                 }
                 return null;
@@ -119,8 +121,15 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: _onSave,
-                  child: const Text('ADD'),
+                  onPressed: _isLoading ? null : _onSave,
+                  child: _isLoading
+                      ? const SizedBox.square(
+                          dimension: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text('ADD'),
                 ),
               ],
             ),
@@ -133,10 +142,11 @@ class _AddTrackerFormState extends State<AddTrackerForm> {
   void _onSave() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      setState(() => _isLoading = true);
       context
-          .read<MoviesRepository>()
-          .addMovie(Movie(title: _title, url: _url));
-      Navigator.pop(context);
+          .read<MoviesListCubit>()
+          .addMovie(Movie(title: _title, url: _url))
+          .then((value) => Navigator.pop(context));
     }
   }
 }

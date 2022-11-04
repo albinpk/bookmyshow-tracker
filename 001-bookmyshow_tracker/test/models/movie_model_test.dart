@@ -1,4 +1,4 @@
-import 'package:bookmyshow_tracker/models/movie_model.dart';
+import 'package:bookmyshow_tracker/core/models/movie_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

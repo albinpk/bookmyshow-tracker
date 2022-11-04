@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'repository/movies_repository.dart';
-import 'screens/screens.dart';
+import 'features/background_fetch/background_fetch.dart';
+import 'features/movies_list/movies_list.dart';
 
 class BookMyShowTracker extends StatelessWidget {
   const BookMyShowTracker({
@@ -15,13 +15,19 @@ class BookMyShowTracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MoviesRepository>(
-      create: (context) => MoviesRepository(sharedPreferences),
-      lazy: false,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<MoviesListCubit>(
+          create: (context) => MoviesListCubit(sharedPreferences)..getMovies(),
+        ),
+        BlocProvider<BackgroundFetchCubit>(
+          create: (context) => BackgroundFetchCubit(sharedPreferences),
+        ),
+      ],
       child: MaterialApp(
         title: 'Bookmyshow Tracker',
         darkTheme: ThemeData.dark(),
-        home: const HomeScreen(),
+        home: const MoviesScreen(),
       ),
     );
   }

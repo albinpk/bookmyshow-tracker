@@ -5,12 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
-import 'constants.dart';
-import 'models/models.dart';
+import '../../../core/constants.dart';
+import '../../../core/models/models.dart';
+import '../../notifications/notifications.dart';
 
 /// A class that contains all static method
 /// to handle workmanager background task.
-class BackgroundTask {
+class WorkmanagerController {
   /// Initializing workmanager.
   static Future<void> init() {
     return Workmanager().initialize(
@@ -59,6 +60,13 @@ void callbackDispatcher() {
           .toList();
       log('Movies length: ${movies.length}');
 
+      // Stop the background task and exit if movies is empty
+      if (movies.isEmpty) {
+        await WorkmanagerController.stopBackgroundTask();
+        log('Background task stop and exit');
+        return true;
+      }
+
       // Check booking available
       final List<int> availableMoviesIndex = [];
       for (int i = 0; i < movies.length; i++) {
@@ -76,11 +84,12 @@ void callbackDispatcher() {
             trackingEnabled: false,
           );
         }
-        await pref.setStringList(
-          'movies',
-          movies.map((e) => e.toJson()).toList(),
-        );
+        NotificationController.showNotification();
       }
+      await pref.setStringList(
+        'movies',
+        movies.map((e) => e.toJson()).toList(),
+      );
     } catch (e) {
       log('Background execution error', error: e);
     }

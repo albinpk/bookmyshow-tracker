@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../models/models.dart';
-import '../repository/movies_repository.dart';
+import '../../../core/models/models.dart';
+import '../movies_list.dart';
 
 class MovieTile extends StatelessWidget {
   const MovieTile({
@@ -50,7 +50,8 @@ class MovieTile extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                context.read<MoviesRepository>().deleteMovie(movie);
+                // context.read<MoviesRepository>().deleteMovie(movie);
+                context.read<MoviesListCubit>().removeMovie(movie);
               },
               tooltip: 'Delete',
               icon: const Icon(Icons.delete, color: Colors.redAccent),
@@ -66,7 +67,7 @@ class MovieTile extends StatelessWidget {
               Switch(
                 value: movie.trackingEnabled,
                 onChanged: (_) {
-                  context.read<MoviesRepository>().toggleTracking(movie);
+                  context.read<MoviesListCubit>().toggleTracking(movie);
                 },
               ),
             ]
