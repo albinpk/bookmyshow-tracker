@@ -83,16 +83,7 @@ class _NewMovieFormState extends State<NewMovieForm> {
                 if (_titleController.text.trim().isNotEmpty) return;
                 url = url.trim();
                 if (RegExp(bookmyshowUrlRegexp).hasMatch(url)) {
-                  final start = url.indexOf('/movies/', 26) + 8;
-                  final end = url.indexOf('/ET', start);
-                  final name = url.substring(start, end);
-                  _titleController.text = name
-                      .split('-')
-                      .where((e) => e.isNotEmpty)
-                      .map((e) =>
-                          e[0].toUpperCase() +
-                          (e.length > 1 ? e.substring(1) : ''))
-                      .join(' ');
+                  _titleController.text = _getMovieNameFromLink(url);
                 }
               },
               onFieldSubmitted: (_) => _onSave(),
@@ -148,5 +139,17 @@ class _NewMovieFormState extends State<NewMovieForm> {
           .addMovie(Movie(title: _title, url: _url))
           .then((value) => Navigator.pop(context));
     }
+  }
+
+  /// Extract and return movie name from Url.
+  String _getMovieNameFromLink(String url) {
+    final start = url.indexOf('/movies/', 26) + 8;
+    final end = url.indexOf('/ET', start);
+    return url
+        .substring(start, end)
+        .split('-')
+        .where((e) => e.isNotEmpty)
+        .map((e) => e[0].toUpperCase() + (e.length > 1 ? e.substring(1) : ''))
+        .join(' ');
   }
 }
