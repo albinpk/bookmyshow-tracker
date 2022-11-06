@@ -7,7 +7,10 @@ import '../movies_list.dart';
 
 /// A form to add new movie to tracking list.
 class NewMovieForm extends StatefulWidget {
-  const NewMovieForm({super.key});
+  const NewMovieForm({super.key, this.url});
+
+  /// Initial Url to show in form.
+  final String? url;
 
   @override
   State<NewMovieForm> createState() => _NewMovieFormState();
@@ -15,14 +18,22 @@ class NewMovieForm extends StatefulWidget {
 
 class _NewMovieFormState extends State<NewMovieForm> {
   final _formKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
 
   // To store Form value
   late String _title;
   late String _url;
 
+  /// Whether the form is saving or not.
   bool _isLoading = false;
 
-  final _titleController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    if (widget.url != null) {
+      _titleController.text = _getMovieNameFromLink(widget.url!);
+    }
+  }
 
   @override
   void dispose() {
@@ -70,6 +81,7 @@ class _NewMovieFormState extends State<NewMovieForm> {
 
             // Url form field
             TextFormField(
+              initialValue: widget.url,
               autofocus: true,
               keyboardType: TextInputType.url,
               decoration: const InputDecoration(
