@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^2.0.15
   awesome_notifications: ^0.7.4+1
   flutter_bloc: ^8.1.1
+  receive_sharing_intent: ^1.4.5
 
 dev_dependencies:
   flutter_test:
