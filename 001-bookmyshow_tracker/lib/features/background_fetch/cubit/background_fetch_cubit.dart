@@ -6,26 +6,28 @@ import '../utils/workmanager_controller.dart';
 
 part 'background_fetch_state.dart';
 
-class BackgroundFetchCubit extends Cubit<bool> {
-  BackgroundFetchCubit(this._pref) : super(_pref.getBool(_key) ?? false) {
-    WorkmanagerController.isBackgroundTaskStarted = state;
+const _isBackgroundFetchActiveKey = 'isBackgroundFetchActive';
+const _backgroundFetchDurationKey = 'backgroundFetchDuration';
+
+class BackgroundFetchCubit extends Cubit<BackgroundFetchState> {
+  BackgroundFetchCubit(this._pref)
+      : super(BackgroundFetchState.initial(_pref)) {
+    WorkmanagerController.isBackgroundTaskStarted = state.isActive;
   }
 
   final SharedPreferences _pref;
 
-  static const _key = 'isBackgroundFetchActive';
-
   start() async {
-    if (state) return;
-    await _pref.setBool(_key, true);
+    if (state.isActive) return;
+    await _pref.setBool(_isBackgroundFetchActiveKey, true);
     await WorkmanagerController.startBackgroundTask();
-    emit(true);
+    emit(state.copyWith(isActive: true));
   }
 
   stop() async {
-    if (!state) return;
-    await _pref.setBool(_key, false);
+    if (!state.isActive) return;
+    await _pref.setBool(_isBackgroundFetchActiveKey, false);
     await WorkmanagerController.stopBackgroundTask();
-    emit(false);
+    emit(state.copyWith(isActive: false));
   }
 }

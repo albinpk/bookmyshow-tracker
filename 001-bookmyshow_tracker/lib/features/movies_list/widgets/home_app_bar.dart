@@ -40,7 +40,7 @@ class _ToggleSwitchState extends State<_ToggleSwitch> {
           current.movies.where((m) => m.trackingEnabled).isEmpty,
       builder: (context, state) {
         return Switch(
-          value: context.select((BackgroundFetchCubit p) => p.state),
+          value: context.select((BackgroundFetchCubit p) => p.state.isActive),
           onChanged: state.movies.where((m) => m.trackingEnabled).isNotEmpty
               ? (v) => v
                   ? context.read<BackgroundFetchCubit>().start()
