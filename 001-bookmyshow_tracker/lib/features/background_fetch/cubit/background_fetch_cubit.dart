@@ -17,14 +17,16 @@ class BackgroundFetchCubit extends Cubit<BackgroundFetchState> {
 
   final SharedPreferences _pref;
 
-  start() async {
+  /// Start the background task.
+  Future<void> start() async {
     if (state.isActive) return;
     await _pref.setBool(_isBackgroundFetchActiveKey, true);
     await WorkmanagerController.startBackgroundTask();
     emit(state.copyWith(isActive: true));
   }
 
-  stop() async {
+  /// Stop the background task.
+  Future<void> stop() async {
     if (!state.isActive) return;
     await _pref.setBool(_isBackgroundFetchActiveKey, false);
     await WorkmanagerController.stopBackgroundTask();
