@@ -8,22 +8,23 @@ class BackgroundFetchState extends Equatable {
 
   BackgroundFetchState.initial(SharedPreferences pref)
       : isActive = pref.getBool(_isBackgroundFetchActiveKey) ?? false,
-        frequency = Duration(
-          minutes: pref.getInt(_backgroundFetchDurationKey) ?? 15,
+        frequency = BackgroundTaskFrequency.fromName(
+          pref.getString(_backgroundFetchDurationKey) ??
+              BackgroundTaskFrequency.hour1.name,
         );
 
 // Whether the background task in active or not.
   final bool isActive;
 
   /// Background task frequency. Minimum 15 minutes.
-  final Duration frequency;
+  final BackgroundTaskFrequency frequency;
 
   @override
   List<Object> get props => [isActive, frequency];
 
   BackgroundFetchState copyWith({
     bool? isActive,
-    Duration? frequency,
+    BackgroundTaskFrequency? frequency,
   }) {
     return BackgroundFetchState(
       isActive: isActive ?? this.isActive,
