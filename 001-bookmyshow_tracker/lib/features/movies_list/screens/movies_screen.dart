@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:bookmyshow_tracker/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
 
+import '../../../core/constants.dart';
 import '../movies_list.dart';
 
 class MoviesScreen extends StatefulWidget {
@@ -45,6 +45,8 @@ class _MoviesScreenState extends State<MoviesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const HomeAppBar(),
+      drawer: const AppDrawer(),
+      drawerEdgeDragWidth: double.infinity,
       body:
           context.select((MoviesListCubit cubit) => cubit.state.movies.isEmpty)
               ? const Center(child: Text('Track a movie'))
