@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/models/models.dart';
 import '../utils/workmanager_controller.dart';
 
 part 'background_fetch_state.dart';
@@ -21,7 +22,7 @@ class BackgroundFetchCubit extends Cubit<BackgroundFetchState> {
   Future<void> start() async {
     if (state.isActive) return;
     await _pref.setBool(_isBackgroundFetchActiveKey, true);
-    await WorkmanagerController.startBackgroundTask();
+    await WorkmanagerController.startBackgroundTask(state.frequency.duration);
     emit(state.copyWith(isActive: true));
   }
 
@@ -31,5 +32,14 @@ class BackgroundFetchCubit extends Cubit<BackgroundFetchState> {
     await _pref.setBool(_isBackgroundFetchActiveKey, false);
     await WorkmanagerController.stopBackgroundTask();
     emit(state.copyWith(isActive: false));
+  }
+
+  /// Change background task frequency.
+  Future<void> changeFrequency(BackgroundTaskFrequency frequency) async {
+    _pref.setString(_backgroundFetchDurationKey, frequency.name);
+    if (state.isActive) {
+      await WorkmanagerController.startBackgroundTask(frequency.duration);
+    }
+    emit(state.copyWith(frequency: frequency));
   }
 }

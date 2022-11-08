@@ -26,12 +26,12 @@ class WorkmanagerController {
   static const backgroundTaskUniqName = 'bookmyshow-periodic-task';
 
   /// Register periodic task.
-  static Future<void> startBackgroundTask() async {
-    if (isBackgroundTaskStarted) return;
+  static Future<void> startBackgroundTask(Duration duration) async {
     await Workmanager().registerPeriodicTask(
       backgroundTaskUniqName,
       'background-fetch',
-      frequency: const Duration(hours: 1),
+      frequency: duration,
+      existingWorkPolicy: ExistingWorkPolicy.replace,
       constraints: Constraints(
         networkType: NetworkType.connected,
       ),
