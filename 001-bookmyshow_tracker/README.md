@@ -29,3 +29,22 @@ When ticket sales for a particular movie or movies on [bookmyshow.com](https://i
 - Change tracking frequency (interval).
 - Display the last time it was checked.
 - Visit a specific movie page on the official BookMyShow app.
+
+## Packages & APIs
+
+- [http](https://pub.dev/packages/http)
+- [workmanager](https://pub.dev/packages/workmanager)
+- [url_launcher](https://pub.dev/packages/url_launcher)
+- [shared_preferences](https://pub.dev/packages/shared_preferences)
+- [awesome_notifications](https://pub.dev/packages/awesome_notifications)
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
+- [receive_sharing_intent](https://pub.dev/packages/receive_sharing_intent)
+
+## Screenshots
+
+  <p>
+    <img src="./docs/images/bookmyshow.gif" alt="BookMyShow Tracker Gif" height="300" />
+    <img src="./docs/images/home.png" alt="BookMyShow Tracker home" height="300" />
+    <img src="./docs/images/movie-form.png" alt="BookMyShow Tracker movie form" height="300" />
+    <img src="./docs/images/sidebar.png" alt="BookMyShow Tracker side bar" height="300" />
+  </p>
