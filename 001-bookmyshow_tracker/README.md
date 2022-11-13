@@ -22,5 +22,6 @@ When ticket sales for a particular movie or movies on [bookmyshow.com](https://i
 - Remove a movie from the list of movies.
 - Turn tracking on or off for a specific movie.
 - Turn off tracking for all movies.
+- Change tracking frequency (interval).
 - Display the last time it was checked.
 - Visit a specific movie page on the official BookMyShow app.
