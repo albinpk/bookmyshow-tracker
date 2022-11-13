@@ -1,4 +1,8 @@
-# BookMyShow Tracker
+<h1 align="center">
+<img src="./assets/icons/icon.png"/>
+<br>
+BookMyShow Tracker
+</h1>
 
 When ticket sales for a particular movie or movies on [bookmyshow.com](https://in.bookmyshow.com) begin, **BookMyShow Tracker** will let you know.
 
