@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1152"
+   height="1152"
+   viewBox="0 0 288 288"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="bookmyshow-tracker-splash-image-dark.svg"
+   inkscape:export-filename="bookmyshow-tracker-splash-dark.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="0.35842913"
+     inkscape:cx="471.50186"
+     inkscape:cy="631.92409"
+     inkscape:window-width="1366"
+     inkscape:window-height="740"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <color-profile
+       name="sRGB"
+       xlink:href="file:///usr/share/color/icc/colord/sRGB.icc"
+       id="color-profile1995" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;opacity:1;fill:#e7394d;fill-opacity:1;stroke:none;stroke-width:0.3;paint-order:stroke markers fill"
+       x="30.31797"
+       y="37.257717"
+       id="text2217"><tspan
+         sodipodi:role="line"
+         id="tspan2215"
+         style="stroke-width:0.3"
+         x="30.31797"
+         y="37.257717" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24.2651px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.515872;paint-order:stroke markers fill"
+       x="92.861275"
+       y="219.90784"
+       id="text2226"><tspan
+         sodipodi:role="line"
+         id="tspan2224"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:24.2651px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke-width:0.515872"
+         x="92.861275"
+         y="219.90784">TRACKER</tspan></text>
+    <g
+       id="g2222"
+       transform="matrix(3.5849766,0,0,3.5849766,62.768511,50.066626)">
+      <path
+         id="rect1805"
+         style="font-variation-settings:'wght' 510;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.3;paint-order:stroke markers fill"
+         d="M 22.927181,7.0771034 18.990405,8.8749921 17.196463,4.9468575 13.26833,6.7407979 3.9416636,31.746917 12.501536,34.939538 a 5.7384577,5.7384577 0 0 1 7.381802,-3.371599 5.7384577,5.7384577 0 0 1 3.371419,7.382285 l 8.559872,3.192622 9.561431,-25.635556 -1.359194,-2.976182 -3.839899,1.754048 -1.794853,-3.930128 -3.930128,1.794851 -1.794672,-3.9306125 -3.930792,1.7951555 -1.797888,-3.9367766 z" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:25.08px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e7394d;fill-opacity:1;stroke:none;stroke-width:0.533197;paint-order:stroke markers fill"
+         x="9.7601757"
+         y="29.325068"
+         id="text2042"><tspan
+           sodipodi:role="line"
+           id="tspan2040"
+           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:25.08px;font-family:'Source Code Pro';-inkscape-font-specification:'Source Code Pro, Medium';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e7394d;fill-opacity:1;stroke-width:0.533197"
+           x="9.7601757"
+           y="29.325068">my</tspan></text>
+    </g>
+  </g>
+</svg>
