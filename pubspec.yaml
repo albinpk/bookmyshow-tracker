@@ -38,3 +38,15 @@ flutter:
 flutter_icons:
   android: true
   image_path: "assets/icons/bookmyshow-tracker-icon.png"
+
+# flutter_native_splash config
+flutter_native_splash:
+  color: "#FFFFFF"
+  color_dark: "#E7394D"
+  image: "assets/images/bookmyshow-tracker-splash-image-light.png"
+  image_dark: "assets/images/bookmyshow-tracker-splash-image-dark.png"
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#E7394D"
+    image: "assets/images/bookmyshow-tracker-splash-image-light.png"
+    image_dark: "assets/images/bookmyshow-tracker-splash-image-dark.png"
