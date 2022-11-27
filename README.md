@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="./assets/icons/icon.png"/>
+<img src="./assets/icons/bookmyshow-tracker-icon.png" height="200px" alt="BookMyShow Tracker logo"/>
 <br>
 BookMyShow Tracker
 </h1>
